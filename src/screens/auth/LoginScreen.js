@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Image, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, Image, TouchableOpacity, StatusBar } from 'react-native'
 import React, { useState } from 'react'
 import { Images } from '../../utilities/styles/Images'
 import { windowHeight, windowWidth } from '../../utilities/styles/Index'
@@ -7,8 +7,9 @@ import RegularText from '../../components/common/RegularText'
 import TextInputComponent from '../../components/common/TextInputComponent'
 import { BackArrowIcon } from '../../utilities/styles/Icons'
 import NormalBtn from '../../components/common/NormalBtn'
+import Colors from '../../utilities/styles/Colors'
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [paasword, setPassword] = useState('');
@@ -16,6 +17,7 @@ const LoginScreen = ({navigation}) => {
 
     return (
         <View style={{ flex: 1, }}>
+            <StatusBar backgroundColor={Colors.black.color} barStyle="light-content" />
             <ImageBackground style={{ height: '100%', width: '100%' }} source={Images.appBackgroundImage}>
                 <View style={{ flex: 1, borderWidth: 1, justifyContent: 'center', paddingHorizontal: 25 }}>
                     <View style={{ width: '100%', alignItems: 'center' }}>

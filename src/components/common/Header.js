@@ -10,7 +10,7 @@ const Header = (props) => {
     return (
         <View style={[style, { backgroundColor: backgroundColor ? backgroundColor : 'transparent', width: windowWidth }]}>
             <SafeAreaView style={{ flexDirection: 'row', justifyContent: 'space-between' }} />
-            <View style={{ height: Platform.OS == 'ios' ? 44 : 55, justifyContent: 'center', marginBottom: 3, }}>
+            <View style={{ height: Platform.OS == 'ios' ? 44 : 55, justifyContent: 'center', marginBottom: 3,}}>
 
                 {isBackButton &&
                     <TouchableOpacity style={{ position: 'absolute', start: 20, }} onPress={leftIconOnPress}>

@@ -10,6 +10,9 @@ const Colors = StyleSheet.create({
     black: {
         color: '#000000'
     },
+    grey: {
+        color: '#ffffff7A'
+    },
 })
 
 export default Colors
