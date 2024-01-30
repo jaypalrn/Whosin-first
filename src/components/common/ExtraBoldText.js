@@ -1,0 +1,16 @@
+import { View, Text } from 'react-native'
+import React from 'react'
+import { boldFont, extraBoldFont } from '../../utilities/styles/Themes';
+import Colors from '../../utilities/styles/Colors';
+
+const ExtraBoldText = (props) => {
+    const { mainStyle, style, txt, txtColor, fontSize } = props;
+
+    return (
+        <View style={[mainStyle, { justifyContent: 'center', }]}>
+            <Text style={style || [extraBoldFont({ size: fontSize ? fontSize : 18, color: txtColor ? txtColor : Colors.white.color }), {}]}>{txt}</Text>
+        </View>
+    )
+}
+
+export default ExtraBoldText
