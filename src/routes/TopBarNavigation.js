@@ -10,16 +10,18 @@ const Tab = createMaterialTopTabNavigator();
 const TopBarNavigation = () => {
     return (
         <Tab.Navigator
-            initialRouteName="Feed"
+            initialRouteName="Deals"
             screenOptions={{
                 tabBarActiveTintColor: Colors.white.color,
-                tabBarLabelStyle: { fontSize: 13 },
+                tabBarInactiveTintColor: Colors.grey.color,
+                tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
                 tabBarStyle: { backgroundColor: 'transparent' },
-                tabBarIndicatorStyle: { backgroundColor: Colors.white.color, height: 2  }
+                // tabBarItemStyle: { width: 100, borderWidth:1, borderColor:'green', },
+                tabBarIndicatorStyle: { backgroundColor: Colors.white.color, height: 2 },
             }}
         >
-            <Tab.Screen name="FirstTopScreen" component={FirstTopScreen} />
-            <Tab.Screen name="SecondTopScreen" component={SecondTopScreen} />
+            <Tab.Screen options={{ tabBarLabel: 'Deals', }} name="FirstTopScreen" component={FirstTopScreen} />
+            <Tab.Screen options={{ tabBarLabel: 'Events' }} name="SecondTopScreen" component={SecondTopScreen} />
         </Tab.Navigator>
     )
 }

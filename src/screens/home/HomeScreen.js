@@ -20,17 +20,11 @@ const HomeScreen = ({ navigation }) => {
                 <TopBarNavigation />
 
                 <TouchableOpacity style={styles.scannerIconContainer}>
-                    <BlurView
-                        blurType="dark"
-                        blurAmount={10}
-                        overlayColor={'transparent'}
-                        reducedTransparencyFallbackColor="dark"
-                    >
-                        <Image
-                            style={{ height: 40, width: 40, borderRadius: 25, tintColor: Colors.grey.color }}
-                            source={Images.qrCode}
-                        />
-                    </BlurView>
+                    <Image
+                        style={{ height: 40, width: 40, borderRadius: 25, tintColor: Colors.white.color }}
+                        source={Images.qrCode}
+                        resizeMode='contain'
+                    />
                 </TouchableOpacity>
             </ImageBackground>
         </View>
@@ -48,16 +42,20 @@ const styles = StyleSheet.create({
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
     },
     scannerIconContainer: {
+        height: 65,
+        width: 65,
         borderRadius: 50,
         position: 'absolute',
         bottom: 30,
         left: '50%',
         marginLeft: -30,
         backgroundColor: 'transparent',
+        justifyContent: 'center',
+        alignItems: 'center',
         borderWidth: 1,
         borderColor: Colors.white.color,
-        padding: 8,
-        // backgroundColor:Colors.grey.color
+        backgroundColor: Colors.liteGrey.color,
+        overflow: 'hidden',
     },
 });
 

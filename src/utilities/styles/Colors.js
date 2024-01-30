@@ -13,6 +13,9 @@ const Colors = StyleSheet.create({
     grey: {
         color: '#ffffff7A'
     },
+    liteGrey: {
+        color: '#ffffff1A'
+    },
 })
 
 export default Colors
