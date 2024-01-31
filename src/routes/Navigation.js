@@ -6,12 +6,13 @@ import HomeScreen from '../screens/home/HomeScreen';
 import TopBarNavigation from './TopBarNavigation';
 import ScannerScreen from '../screens/common/ScannerScreen';
 import SplashScreen from '../screens/common/SplashScreen';
+import { navigationRef } from './RootNavigation';
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationRef}>
             <Stack.Navigator initialRouteName='SplashScreen'>
                 <Stack.Screen options={{ headerShown: false }} name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="LoginScreen" component={LoginScreen} />

@@ -1,12 +1,28 @@
-import { View, Text, ImageBackground, Image } from 'react-native'
-import React from 'react'
+import { View, Text, ImageBackground, Image, StatusBar } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { Images } from '../../utilities/styles/Images'
 import ExtraBoldText from '../../components/common/ExtraBoldText'
 import { windowHeight } from '../../utilities/styles/Index'
+import { useSelector } from 'react-redux'
 
-const SplashScreen = () => {
+const SplashScreen = ({navigation}) => {
+
+    const [timer, setTimer] = useState(null)
+
+
+    const handleNavigation = () => {
+        setTimeout(() => {
+            navigation.replace('HomeScreen')
+        }, 3000);
+    }
+
+    useEffect(() => {
+        handleNavigation()
+    }, [])
+
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
             <ImageBackground
                 source={Images.SplashbackGround}
                 style={{ height: '100%', width: '100%', justifyContent: 'center' }}

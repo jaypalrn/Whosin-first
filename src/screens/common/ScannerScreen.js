@@ -4,6 +4,7 @@ import QRCodeScanner from 'react-native-qrcode-scanner'
 import { RNCamera } from 'react-native-camera'
 import Header from '../../components/common/Header'
 import { Images } from '../../utilities/styles/Images'
+import { windowHeight, windowWidth } from '../../utilities/styles/Index'
 
 const ScannerScreen = () => {
 
@@ -20,13 +21,29 @@ const ScannerScreen = () => {
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
             <ImageBackground style={styles.backgroundImage} source={Images.appBackgroundImage} resizeMode='cover' >
                 <View style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
-                    <Header
-                        title={'QR Code'}
-                        titlePosition={"flex-start"}
-                    />
 
                     <QRCodeScanner
-                        onRead={handleBarcodeScanned}   
+                        onRead={handleBarcodeScanned}
+                        showMarker={true}
+                        cameraStyle={{ height: windowHeight, width: windowWidth, borderWidth: 2, borderColor: 'red', zIndex:1 }}
+                        markerStyle={{ borderColor: 'red', borderWidth: 2, borderRadius: 10 }}
+                        containerStyle={{ opacity: 10, borderColor: 'green', borderWidth: 2 }}
+
+                        topContent={
+                            <View style={{borderWidth:2, borderColor:'white', backgroundColor:'transparent', zIndex:2}}>
+                                <Text style={styles.centerText}>
+                                    Go to{' '}
+                                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
+                                    your computer and scan the QR code.
+                                </Text>
+                            </View>
+                        }
+
+                        bottomContent={
+                            <TouchableOpacity style={styles.buttonTouchable}>
+                                <Text style={styles.buttonText}>OK. Got it!</Text>
+                            </TouchableOpacity>
+                        }
                     // flashMode={RNCamera.Constants.FlashMode.torch}
                     />
 
@@ -45,7 +62,8 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 18,
         padding: 32,
-        color: '#777'
+        color: 'red'
+
     },
     textBold: {
         fontWeight: '500',
