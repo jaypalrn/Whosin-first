@@ -5,13 +5,15 @@ import LoginScreen from '../screens/auth/LoginScreen';
 import HomeScreen from '../screens/home/HomeScreen';
 import TopBarNavigation from './TopBarNavigation';
 import ScannerScreen from '../screens/common/ScannerScreen';
+import SplashScreen from '../screens/common/SplashScreen';
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='LoginScreen'>
+            <Stack.Navigator initialRouteName='SplashScreen'>
+                <Stack.Screen options={{ headerShown: false }} name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="HomeScreen" component={HomeScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="ScannerScreen" component={ScannerScreen} />
