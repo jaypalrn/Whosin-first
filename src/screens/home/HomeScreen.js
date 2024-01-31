@@ -1,11 +1,9 @@
 import { View, Text, ImageBackground, StyleSheet, Image, StatusBar, Platform, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/common/Header'
 import Colors from '../../utilities/styles/Colors'
-import { ScannerIcon } from '../../utilities/styles/Icons'
 import { Images } from '../../utilities/styles/Images'
 import TopBarNavigation from '../../routes/TopBarNavigation'
-import { BlurView } from '@react-native-community/blur'
 
 const HomeScreen = ({ navigation }) => {
     return (
@@ -19,7 +17,7 @@ const HomeScreen = ({ navigation }) => {
 
                 <TopBarNavigation />
 
-                <TouchableOpacity style={styles.scannerIconContainer}>
+                <TouchableOpacity style={styles.scannerIconContainer} onPress={() => navigation.navigate('ScannerScreen')}>
                     <Image
                         style={{ height: 40, width: 40, borderRadius: 25, tintColor: Colors.white.color }}
                         source={Images.qrCode}
