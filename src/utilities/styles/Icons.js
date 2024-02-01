@@ -1,4 +1,4 @@
-import { G, Path, Polygon, Svg } from "react-native-svg";
+import { G, Path, Polygon, Rect, Svg } from "react-native-svg";
 
 export const BackArrowIcon = ({ height, width }) => (
     <Svg width={width ? width : 10} height={height ? height : 19} viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,6 +26,16 @@ export const FlashOnIcon = ({ height, width }) => (
         <G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
         <G id="SVGRepo_iconCarrier">
             <Polygon fill="#000000" points="33,22 23.6,22 30,5 19,5 13,26 21.6,26 17,45" />
+        </G>
+    </Svg>
+)
+export const FlashOffIcon = ({ height, width }) => (
+    <Svg width={width ? width : 30} height={height ? height : 30} viewBox="0 0 48 48" version="1" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 48 48" fill="#000000">
+        <G id="SVGRepo_bgCarrier" stroke-width="0" />
+        <G id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+        <G id="SVGRepo_iconCarrier">
+            <Polygon fill="#000000" points="33,22 23.6,22 30,5 19,5 13,26 21.6,26 17,45" />
+            <Rect x="22" y="-2.9" transform="matrix(.707 -.707 .707 .707 -9.941 24)" fill="#37474F" width="4" height="53.7" />
         </G>
     </Svg>
 )

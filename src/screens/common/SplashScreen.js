@@ -19,7 +19,7 @@ const SplashScreen = ({navigation}) => {
             } else {
                 navigation.replace('LoginScreen')
             }
-        }, 5000)
+        }, 2000)
         setTimer(newTimer)
     }
 

@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Image, TouchableOpacity, StatusBar, Alert } from 'react-native'
+import { View, Text, ImageBackground, Image, TouchableOpacity, StatusBar, Alert, StyleSheet } from 'react-native'
 import React, { useState } from 'react'
 import { Images } from '../../utilities/styles/Images'
 import { windowHeight, windowWidth } from '../../utilities/styles/Index'
@@ -8,12 +8,12 @@ import TextInputComponent from '../../components/common/TextInputComponent'
 import { BackArrowIcon } from '../../utilities/styles/Icons'
 import NormalBtn from '../../components/common/NormalBtn'
 import Colors from '../../utilities/styles/Colors'
-import { Dropdown } from 'react-native-element-dropdown'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { RequestLogin } from '../../utilities/api/apiController'
 import Loader from '../../components/common/Loader'
 import { useDispatch } from 'react-redux'
 import { setIsLogin, setTokenData, setUserData } from '../../utilities/redux/reducers'
+import { mediumFont } from '../../utilities/styles/Themes'
 
 const LoginScreen = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -22,12 +22,33 @@ const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [loginType, setLoginType] = useState('');
+    const [loginType, setLoginType] = useState(0);
 
-    const data = [
-        { label: 'login as activity provider', value: 'provider' },
-        { label: 'login as event organizer', value: 'org' },
-    ];
+    const CustomSegmentedControl = ({ values, selectedIndex, onTabPress }) => {
+        return (
+            <View style={styles.segmentedControl}>
+                {values.map((value, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={[
+                            styles.segment,
+                            {
+                                borderTopLeftRadius: index === 0 ? 25 : 0,
+                                borderBottomLeftRadius: index === 0 ? 25 : 0,
+                                borderTopRightRadius: index === values.length - 1 ? 25 : 0,
+                                borderBottomRightRadius: index === values.length - 1 ? 25 : 0,
+                                backgroundColor: index === selectedIndex ? Colors.grey.color : 'transparent',
+                            },
+                        ]}
+                        onPress={() => onTabPress(index)}>
+                        <Text style={[mediumFont({ size: 13, color: index === selectedIndex ? Colors.white.color : Colors.white.color, }),]}>
+                            {value}
+                        </Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        );
+    };
 
     async function goToNext() {
         if (email == null || email.length == 0) {
@@ -46,10 +67,11 @@ const LoginScreen = ({ navigation }) => {
         var body = {
             username: email,
             password: password,
-            type: loginType
+            type: loginType === 0 ? 'provider' : 'org',
         }
         setLoading(true)
         let response = await RequestLogin({ body, navigation });
+        console.log('body: ', body )
         setLoading(false)
         if (response?.data?.status === 1) {
             dispatch(setIsLogin(true));
@@ -78,8 +100,18 @@ const LoginScreen = ({ navigation }) => {
                         <BoldText mainStyle={{ marginTop: 30 }} txt={'Welcome to WhoisIN'} />
                         <RegularText mainStyle={{ marginTop: 10 }} txt={'Sign up or Login to enjoy our best features'} />
                     </View>
+
+                    <View style={{ marginTop: 40 }}>
+                        <CustomSegmentedControl
+                            values={['Provider', 'Organizer']}
+                            selectedIndex={loginType}
+                            onTabPress={(index) => setLoginType(index)}
+                        />
+                    </View>
+
+
                     <TextInputComponent
-                        style={{ marginTop: 40 }}
+                        style={{ marginTop: 20 }}
                         hintText={'Enter email or Mobile Number'}
                         onTextChange={(text) => setEmail(text)}
                         value={email}
@@ -93,20 +125,6 @@ const LoginScreen = ({ navigation }) => {
                         isPassword={true}
                     />
 
-                    <Dropdown
-                        style={{ height: windowHeight / 20, borderColor: Colors.appColor.color, borderWidth: 1, borderRadius: 25, paddingHorizontal: 10, marginTop: 20, }}
-                        placeholderStyle={{ color: '#FFFFFF80', fontSize: RFValue(14) }}
-                        itemTextStyle={{ color: Colors.appColor.color }}
-                        selectedTextStyle={{ color: Colors.white.color }}
-                        data={data}
-                        value={loginType}
-                        onChange={(selectedItem) => { setLoginType(selectedItem.value); }}
-                        labelField="label"
-                        valueField="label"
-                        placeholder='Select type'
-
-                    />
-
                     <TouchableOpacity style={{ marginTop: 35 }} onPress={goToNext} >
                         <NormalBtn title={'Login'} />
                     </TouchableOpacity>
@@ -116,5 +134,22 @@ const LoginScreen = ({ navigation }) => {
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    segmentedControl: {
+        flexDirection: 'row',
+        borderWidth: 1,
+        borderColor: Colors.grey.color,
+        height: windowHeight / 20,
+        borderRadius: 25,
+        overflow: 'hidden',
+    },
+    segment: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});
 
 export default LoginScreen

@@ -5,11 +5,16 @@ import { RNCamera } from 'react-native-camera'
 import Header from '../../components/common/Header'
 import { Images } from '../../utilities/styles/Images'
 import { windowHeight, windowWidth } from '../../utilities/styles/Index'
-import { CloseIcon, FlashOnIcon } from '../../utilities/styles/Icons'
+import { CloseIcon, FlashOffIcon, FlashOnIcon } from '../../utilities/styles/Icons'
 import Colors from '../../utilities/styles/Colors'
 import BoldText from '../../components/common/BoldText'
+import ImageCropPicker from 'react-native-image-crop-picker'
 
-const ScannerScreen = () => {
+const ScannerScreen = ({ navigation }) => {
+
+    const [flashOn, setFlashOn] = useState(false);
+    const [imageUri, setImageUri] = useState('');
+
 
     const handleBarcodeScanned = ({ data }) => {
         Alert.alert('Barcode Scanned', data);
@@ -18,6 +23,22 @@ const ScannerScreen = () => {
             console.error('An error occurred', err)
         );
     };
+
+    const toggleFlash = () => {
+        setFlashOn(prevState => !prevState);
+    };
+
+    function uplodeImage() {
+        ImageCropPicker.openPicker({
+            width: 400,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            console.log(image?.path)
+            setImageUri(image?.path);
+            // requestUpdateAvatar(image)
+        });
+    }
 
     return (
         <View style={{ flex: 1, }}>
@@ -28,32 +49,30 @@ const ScannerScreen = () => {
                     <QRCodeScanner
                         onRead={handleBarcodeScanned}
                         showMarker={true}
-                        cameraStyle={{ height: windowHeight, width: windowWidth, borderWidth: 2, borderColor: 'red', zIndex: 1 }}
-                        markerStyle={{ borderColor: 'green', borderWidth: 2, borderRadius: 10 }}
-                        containerStyle={{ opacity: 10, borderColor: 'green', borderWidth: 2 }}
+                        cameraStyle={{ height: windowHeight, width: windowWidth, zIndex: 1, opacity: 1, }}
+                        markerStyle={{ borderColor: 'green', borderWidth: 2.5, borderRadius: 10, opacity: 0.8, }}
+                        containerStyle={{ borderColor: 'green', }}
+                        flashMode={flashOn ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
 
                         topContent={
-                            <View style={{
-                                borderWidth: 2, borderColor: 'green', backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 60, justifyContent: 'center', alignItems: "flex-start", position: 'absolute', top: 10, flexDirection: 'row'
-                            }}>
-                                <TouchableOpacity style={{ padding: 5, borderRadius: 50, backgroundColor: Colors.grey.color, }}>
+                            <View style={{ backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 60, justifyContent: 'space-between', alignItems: "flex-start", position: 'absolute', top: 10, flexDirection: 'row', paddingHorizontal: 15 }}>
+                                <TouchableOpacity style={{ padding: 5, borderRadius: 50, backgroundColor: Colors.grey.color, }} onPress={() => navigation.goBack()}>
                                     <CloseIcon />
                                 </TouchableOpacity>
 
-                                <TouchableOpacity style={{ padding: 5, borderRadius: 50, backgroundColor: Colors.grey.color, }}>
-                                    <FlashOnIcon />
+                                <TouchableOpacity style={{ padding: 5, borderRadius: 50, backgroundColor: Colors.grey.color, }} onPress={toggleFlash}>
+                                    {flashOn ? <FlashOnIcon /> : <FlashOffIcon />}
                                 </TouchableOpacity>
                             </View>
                         }
 
                         bottomContent={
-                            <View style={{ borderWidth: 2, borderColor: 'green', backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 60, justifyContent: 'center', alignItems: "center", position: 'absolute', bottom: 30 }}>
-                                <TouchableOpacity>
-                                    <BoldText txt={'Upload From Gallary'} txtColor={Colors.grey.color} />
+                            <View style={{ backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 60, justifyContent: 'center', alignItems: "center", position: 'absolute', bottom: 30 }}>
+                                <TouchableOpacity onPress={uplodeImage}>
+                                    <BoldText txt={'Upload From Gallary'} txtColor={Colors.darkGrey.color} />
                                 </TouchableOpacity>
                             </View>
                         }
-                    // flashMode={RNCamera.Constants.FlashMode.torch}
                     />
 
                 </View>
@@ -80,7 +99,8 @@ const styles = StyleSheet.create({
     },
     buttonTouchable: {
         padding: 16
-    }
+    },
+
 })
 
 export default ScannerScreen
