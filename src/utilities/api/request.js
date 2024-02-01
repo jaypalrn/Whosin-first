@@ -1,9 +1,10 @@
 import axios from "axios";
 import { baseURL } from "./instance";
+import { store } from "../redux/store";
 
 const post_request = async ({ target, body, navigation }) => {
 
-    // const token = store.getState().userSession.tokenData
+    const token = store.getState().userSession.tokenData
     const instance = axios.create({
         baseURL: baseURL,
         headers: {
@@ -12,7 +13,6 @@ const post_request = async ({ target, body, navigation }) => {
     });
     try {
         const response = await instance.post(target, body);
-        console.log(response.data)
         return response;
     } catch (err) {
         return err.response

@@ -5,6 +5,9 @@ import { RNCamera } from 'react-native-camera'
 import Header from '../../components/common/Header'
 import { Images } from '../../utilities/styles/Images'
 import { windowHeight, windowWidth } from '../../utilities/styles/Index'
+import { CloseIcon, FlashOnIcon } from '../../utilities/styles/Icons'
+import Colors from '../../utilities/styles/Colors'
+import BoldText from '../../components/common/BoldText'
 
 const ScannerScreen = () => {
 
@@ -30,15 +33,25 @@ const ScannerScreen = () => {
                         containerStyle={{ opacity: 10, borderColor: 'green', borderWidth: 2 }}
 
                         topContent={
-                            <View style={{ borderWidth: 2, borderColor: 'green', backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 200 }}>
+                            <View style={{
+                                borderWidth: 2, borderColor: 'green', backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 60, justifyContent: 'center', alignItems: "flex-start", position: 'absolute', top: 10, flexDirection: 'row'
+                            }}>
+                                <TouchableOpacity style={{ padding: 5, borderRadius: 50, backgroundColor: Colors.grey.color, }}>
+                                    <CloseIcon />
+                                </TouchableOpacity>
 
+                                <TouchableOpacity style={{ padding: 5, borderRadius: 50, backgroundColor: Colors.grey.color, }}>
+                                    <FlashOnIcon />
+                                </TouchableOpacity>
                             </View>
                         }
 
                         bottomContent={
-                            <TouchableOpacity style={styles.buttonTouchable}>
-                                <Text style={styles.buttonText}>OK. Got it!</Text>
-                            </TouchableOpacity>
+                            <View style={{ borderWidth: 2, borderColor: 'green', backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 60, justifyContent: 'center', alignItems: "center", position: 'absolute', bottom: 30 }}>
+                                <TouchableOpacity>
+                                    <BoldText txt={'Upload From Gallary'} txtColor={Colors.grey.color} />
+                                </TouchableOpacity>
+                            </View>
                         }
                     // flashMode={RNCamera.Constants.FlashMode.torch}
                     />
@@ -64,10 +77,6 @@ const styles = StyleSheet.create({
     textBold: {
         fontWeight: '500',
         color: '#000'
-    },
-    buttonText: {
-        fontSize: 21,
-        color: 'rgb(0,122,255)'
     },
     buttonTouchable: {
         padding: 16

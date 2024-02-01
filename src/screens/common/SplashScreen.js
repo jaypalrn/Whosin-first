@@ -11,12 +11,6 @@ const SplashScreen = ({navigation}) => {
 
     const isLogin = useSelector((state) => state.userSession?.isLogin);
 
-    // const handleNavigation = () => {
-    //     setTimeout(() => {
-    //         navigation.replace('LoginScreen')
-    //     }, 3000);
-    // }
-
     const handleNavigation = () => {
         clearTimeout(timer)
         const newTimer = setTimeout(() => {

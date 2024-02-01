@@ -13,7 +13,7 @@ import { RFValue } from 'react-native-responsive-fontsize'
 import { RequestLogin } from '../../utilities/api/apiController'
 import Loader from '../../components/common/Loader'
 import { useDispatch } from 'react-redux'
-import { setIsLogin, setUserData } from '../../utilities/redux/reducers'
+import { setIsLogin, setTokenData, setUserData } from '../../utilities/redux/reducers'
 
 const LoginScreen = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -23,8 +23,6 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
 
     const [loginType, setLoginType] = useState('');
-    const [isFocus, setIsFocus] = useState(false);
-
 
     const data = [
         { label: 'login as activity provider', value: 'provider' },
@@ -53,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
         setLoading(true)
         let response = await RequestLogin({ body, navigation });
         setLoading(false)
-        console.log("responce", response?.data?.data)
         if (response?.data?.status === 1) {
             dispatch(setIsLogin(true));
             dispatch(setTokenData(response?.data?.data?.token));

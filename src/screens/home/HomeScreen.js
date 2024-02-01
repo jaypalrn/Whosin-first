@@ -1,18 +1,56 @@
-import { View, Text, ImageBackground, StyleSheet, Image, StatusBar, Platform, TouchableOpacity } from 'react-native'
+import { View, Text, ImageBackground, StyleSheet, Image, StatusBar, Platform, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import Header from '../../components/common/Header'
 import Colors from '../../utilities/styles/Colors'
 import { Images } from '../../utilities/styles/Images'
 import TopBarNavigation from '../../routes/TopBarNavigation'
+import { LogoutIcon } from '../../utilities/styles/Icons'
+import Loader from '../../components/common/Loader'
+import { useDispatch } from 'react-redux'
+import { setIsLogin, setUserData } from '../../utilities/redux/reducers'
 
 const HomeScreen = ({ navigation }) => {
+    const dispatch = useDispatch();
+
+    const [loading, setLoading] = useState(false);
+
+    const logOutConformation = () => {
+        Alert.alert(
+            'Confirmation',
+            'Are you sure you want to proceed?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                },
+                {
+                    text: 'OK',
+                    onPress: () => requestLogOut(),
+                },
+            ],
+            { cancelable: false }
+        );
+    };
+
+    async function requestLogOut() {
+        setLoading(true)
+        dispatch(setUserData(''))
+        dispatch(setIsLogin(false))
+        navigation.navigate('SplashScreen')
+        setLoading(false)
+    }
+
     return (
         <View style={styles.container}>
+            <Loader animating={loading} />
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
             <ImageBackground style={styles.backgroundImage} source={Images.appBackgroundImage}>
                 <Header
                     title={'Whosin'}
                     titlePosition={"flex-start"}
+                    rightIcon={<LogoutIcon />}
+                    rightIconOnPress={logOutConformation}
                 />
 
                 <TopBarNavigation />
