@@ -11,18 +11,24 @@ import Colors from '../../utilities/styles/Colors'
 import { Dropdown } from 'react-native-element-dropdown'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { RequestLogin } from '../../utilities/api/apiController'
+import Loader from '../../components/common/Loader'
+import { useDispatch } from 'react-redux'
+import { setIsLogin, setUserData } from '../../utilities/redux/reducers'
 
 const LoginScreen = ({ navigation }) => {
+    const dispatch = useDispatch()
 
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const [loginType, setLoginType] = useState('');
+    const [isFocus, setIsFocus] = useState(false);
 
 
     const data = [
-        { label: 'login as activity provider', value: 1 },
-        { label: 'login as event organizer', value: 2 },
+        { label: 'login as activity provider', value: 'provider' },
+        { label: 'login as event organizer', value: 'org' },
     ];
 
     async function goToNext() {
@@ -34,26 +40,25 @@ const LoginScreen = ({ navigation }) => {
             Alert.alert("Please enter Password");
             return
         }
-        if (!isValideEmail(email)) {
-            Alert.alert("Please enter valide email");
-            return
-        }
 
         requestLogin();
     }
 
     async function requestLogin() {
-
         var body = {
-            email: email,
+            username: email,
             password: password,
             type: loginType
         }
-
         setLoading(true)
         let response = await RequestLogin({ body, navigation });
         setLoading(false)
+        console.log("responce", response?.data?.data)
         if (response?.data?.status === 1) {
+            dispatch(setIsLogin(true));
+            dispatch(setTokenData(response?.data?.data?.token));
+            dispatch(setUserData(response?.data?.data));
+            Alert.alert("login successful", response?.data?.message);
             navigation.replace("HomeScreen");
         } else {
             Alert.alert(response?.data?.message)
@@ -62,6 +67,7 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, }}>
+            <Loader animating={loading} />
             <StatusBar backgroundColor={Colors.black.color} barStyle="light-content" />
             <ImageBackground style={{ height: '100%', width: '100%' }} source={Images.appBackgroundImage}>
                 <View style={{ flex: 1, borderWidth: 1, justifyContent: 'center', paddingHorizontal: 25 }}>
@@ -97,10 +103,11 @@ const LoginScreen = ({ navigation }) => {
                         selectedTextStyle={{ color: Colors.white.color }}
                         data={data}
                         value={loginType}
-                        onChange={(selectedItem) => { setLoginType(selectedItem.label); }}
+                        onChange={(selectedItem) => { setLoginType(selectedItem.value); }}
                         labelField="label"
                         valueField="label"
                         placeholder='Select type'
+
                     />
 
                     <TouchableOpacity style={{ marginTop: 35 }} onPress={goToNext} >

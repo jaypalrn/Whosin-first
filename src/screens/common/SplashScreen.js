@@ -9,11 +9,24 @@ const SplashScreen = ({navigation}) => {
 
     const [timer, setTimer] = useState(null)
 
+    const isLogin = useSelector((state) => state.userSession?.isLogin);
+
+    // const handleNavigation = () => {
+    //     setTimeout(() => {
+    //         navigation.replace('LoginScreen')
+    //     }, 3000);
+    // }
 
     const handleNavigation = () => {
-        setTimeout(() => {
-            navigation.replace('HomeScreen')
-        }, 3000);
+        clearTimeout(timer)
+        const newTimer = setTimeout(() => {
+            if (isLogin) {
+                navigation.replace('HomeScreen')
+            } else {
+                navigation.replace('LoginScreen')
+            }
+        }, 5000)
+        setTimer(newTimer)
     }
 
     useEffect(() => {

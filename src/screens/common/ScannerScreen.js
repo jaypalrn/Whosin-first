@@ -25,17 +25,13 @@ const ScannerScreen = () => {
                     <QRCodeScanner
                         onRead={handleBarcodeScanned}
                         showMarker={true}
-                        cameraStyle={{ height: windowHeight, width: windowWidth, borderWidth: 2, borderColor: 'red', zIndex:1 }}
-                        markerStyle={{ borderColor: 'red', borderWidth: 2, borderRadius: 10 }}
+                        cameraStyle={{ height: windowHeight, width: windowWidth, borderWidth: 2, borderColor: 'red', zIndex: 1 }}
+                        markerStyle={{ borderColor: 'green', borderWidth: 2, borderRadius: 10 }}
                         containerStyle={{ opacity: 10, borderColor: 'green', borderWidth: 2 }}
 
                         topContent={
-                            <View style={{borderWidth:2, borderColor:'white', backgroundColor:'transparent', zIndex:2}}>
-                                <Text style={styles.centerText}>
-                                    Go to{' '}
-                                    <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on
-                                    your computer and scan the QR code.
-                                </Text>
+                            <View style={{ borderWidth: 2, borderColor: 'green', backgroundColor: 'transparent', zIndex: 2, width: windowWidth, height: 200 }}>
+
                             </View>
                         }
 
