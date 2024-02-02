@@ -5,4 +5,5 @@ export const Images = {
     qrCode: require('../../assets/images/qrCode.png'),
     SplashbackGround: require('../../assets/images/SplashbackGround.png'),
     WhiteappLogo: require('../../assets/images/WhiteappLogo.png'),
+    placeholderImage: require('../../assets/images/placeholder.jpg'),
 }

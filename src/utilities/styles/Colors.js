@@ -10,6 +10,9 @@ const Colors = StyleSheet.create({
     black: {
         color: '#000000'
     },
+    backgroundBlack:{
+        color: '#222222'
+    },
     grey: {
         color: '#ffffff7A'
     },

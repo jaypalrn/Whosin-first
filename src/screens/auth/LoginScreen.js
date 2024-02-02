@@ -14,6 +14,7 @@ import Loader from '../../components/common/Loader'
 import { useDispatch } from 'react-redux'
 import { setIsLogin, setTokenData, setUserData } from '../../utilities/redux/reducers'
 import { mediumFont } from '../../utilities/styles/Themes'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const LoginScreen = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -71,7 +72,7 @@ const LoginScreen = ({ navigation }) => {
         }
         setLoading(true)
         let response = await RequestLogin({ body, navigation });
-        console.log('body: ', body )
+        console.log('body: ', body)
         setLoading(false)
         if (response?.data?.status === 1) {
             dispatch(setIsLogin(true));
@@ -89,7 +90,10 @@ const LoginScreen = ({ navigation }) => {
             <Loader animating={loading} />
             <StatusBar backgroundColor={Colors.black.color} barStyle="light-content" />
             <ImageBackground style={{ height: '100%', width: '100%' }} source={Images.appBackgroundImage}>
-                <View style={{ flex: 1, borderWidth: 1, justifyContent: 'center', paddingHorizontal: 25 }}>
+                <KeyboardAwareScrollView
+                    style={{ flex: 1, paddingHorizontal: 25 }}
+                    contentContainerStyle={{ flex: 1, justifyContent: 'center', }}
+                    enableOnAndroid={true} extraScrollHeight={50}>
                     <View style={{ width: '100%', alignItems: 'center' }}>
                         <Image
                             source={Images.appLogo}
@@ -128,8 +132,7 @@ const LoginScreen = ({ navigation }) => {
                     <TouchableOpacity style={{ marginTop: 35 }} onPress={goToNext} >
                         <NormalBtn title={'Login'} />
                     </TouchableOpacity>
-
-                </View>
+                </KeyboardAwareScrollView>
             </ImageBackground>
         </View>
     )

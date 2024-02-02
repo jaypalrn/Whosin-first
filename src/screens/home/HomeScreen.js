@@ -57,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
 
                 <TouchableOpacity style={styles.scannerIconContainer} onPress={() => navigation.navigate('ScannerScreen')}>
                     <Image
-                        style={{ height: 40, width: 40, borderRadius: 25, tintColor: Colors.white.color }}
+                        style={{ height: 40, width: 40, borderRadius: 25, tintColor: Colors.black.color,}}
                         source={Images.qrCode}
                         resizeMode='contain'
                     />
@@ -85,12 +85,11 @@ const styles = StyleSheet.create({
         bottom: 30,
         left: '50%',
         marginLeft: -30,
-        backgroundColor: 'transparent',
         justifyContent: 'center',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: Colors.white.color,
-        backgroundColor: Colors.liteGrey.color,
+        borderColor: Colors.black.color,
+        backgroundColor: Colors.grey.color,
         overflow: 'hidden',
     },
 });
