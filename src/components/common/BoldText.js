@@ -1,6 +1,7 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { boldFont } from '../../utilities/styles/Themes';
+import Colors from '../../utilities/styles/Colors';
 
 const BoldText = (props) => {
     const { mainStyle, style, txt, txtColor, fontSize } = props;

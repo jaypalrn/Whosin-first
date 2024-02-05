@@ -41,6 +41,14 @@ const HomeScreen = ({ navigation }) => {
         setLoading(false)
     }
 
+    const scannerNavigation = () => {
+        if(Platform.OS === 'ios') {
+            navigation.navigate('QrScannerScreen');
+        }else {
+            navigation.navigate('ScannerScreen');
+        }
+    }
+
     return (
         <View style={styles.container}>
             <Loader animating={loading} />
@@ -55,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
 
                 <TopBarNavigation />
 
-                <TouchableOpacity style={styles.scannerIconContainer} onPress={() => navigation.navigate('ScannerScreen')}>
+                <TouchableOpacity style={styles.scannerIconContainer} onPress={scannerNavigation}>
                     <Image
                         style={{ height: 40, width: 40, borderRadius: 25, tintColor: Colors.black.color,}}
                         source={Images.qrCode}
