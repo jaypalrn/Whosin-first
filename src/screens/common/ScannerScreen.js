@@ -9,43 +9,107 @@ import { CloseIcon, FlashOffIcon, FlashOnIcon } from '../../utilities/styles/Ico
 import Colors from '../../utilities/styles/Colors'
 import BoldText from '../../components/common/BoldText'
 import ImageCropPicker from 'react-native-image-crop-picker'
+import RNQRGenerator from 'rn-qr-generator'
+import { RequestScanReedem } from '../../utilities/api/apiController'
+import Loader from '../../components/common/Loader'
 
 const ScannerScreen = ({ navigation }) => {
 
     const [flashOn, setFlashOn] = useState(false);
     const [imageUri, setImageUri] = useState('');
+    const [scanReedemData, setScanReedemData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
+    // const handleBarcodeScanned = ({ data }) => {
+    //     Alert.alert('Barcode Scanned', data);
+    //     console.log('Barcode Scanned', data);
+    //     requestScanReedem(data);
+    // };
 
     const handleBarcodeScanned = ({ data }) => {
-        Alert.alert('Barcode Scanned', data);
-        console.log('Barcode Scanned', data);
-        Linking.openURL(data).catch(err =>
-            console.error('An error occurred', err)
-        );
+        try {
+            // Remove the "data:" prefix from the string
+            const jsonData = data.replace('data:', '');
+            console.log('Raw barcode data:', jsonData);
+            
+            // Parse the JSON string into an object
+            const barcodeData = JSON.parse(jsonData);
+            console.log('Barcode Scanned data:', barcodeData);
+            
+            const id = barcodeData.id;
+            console.log('Scanning QR data:', { id });
+            requestScanReedem(barcodeData);
+        } catch (error) {
+            console.error('Error parsing barcode data:', error);
+            // Provide a fallback mechanism here, such as logging an error message or handling it accordingly
+        }
     };
-
+    
     const toggleFlash = () => {
         setFlashOn(prevState => !prevState);
     };
 
     function uplodeImage() {
         ImageCropPicker.openPicker({
-            width: 400,
-            height: 400,
             cropping: true
         }).then(image => {
             console.log(image?.path)
             setImageUri(image?.path);
-            // requestUpdateAvatar(image)
+            ImageScanner(image?.path);
         });
+    }
+
+    function ImageScanner(ImagePath) {
+        if (!ImagePath) {
+            Alert.alert('please select a proper image');
+            return;
+        }
+        RNQRGenerator.detect({
+            uri: ImagePath
+        })
+            .then(response => {
+                console.log('Scanned QR code response:', response);
+                const { values } = response;
+                navigation.goBack();
+                Alert.alert('Scanned QR codes from image:', values.join('\n'));
+            })
+            .catch(error => {
+                Alert.alert('Cannot detect QR code in image', error);
+            });
+    }
+
+    const requestScanReedem = async (data) => {
+        let body = {
+            id: data?.id,
+            type: data?.type,
+            qty: data?.qty,
+            uniqueCode: data?.uniqueCode
+        }
+        console.log('scan body', body)
+        setLoading(true)
+        let response = await RequestScanReedem({ body, navigation })
+        if (typeof response === 'string') {
+            console.log(response);
+        } else {
+            if (response.data.status === 1) {
+                console.log(response?.data?.data);
+                Alert.alert(response?.data?.message);
+                setScanReedemData(response?.data?.data);
+                navigation.goBack();
+            } else {
+                Alert.alert(response?.data?.message)
+            }
+        }
+        setLoading(false)
     }
 
     return (
         <View style={{ flex: 1, }}>
             <StatusBar translucent={true} backgroundColor="transparent" barStyle="light-content" />
             <ImageBackground style={styles.backgroundImage} source={Images.appBackgroundImage} resizeMode='cover' >
-                <View style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
+                <Loader animating={loading} />
 
+                <View style={{ flex: 1, paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }}>
                     <QRCodeScanner
                         onRead={handleBarcodeScanned}
                         showMarker={true}

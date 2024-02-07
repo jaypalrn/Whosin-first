@@ -5,4 +5,21 @@ const RequestLogin = async ({ body, navigation }) => {
     return data;
 }
 
-export { RequestLogin }
+const RequestActivityList = async ({ body, navigation }) => {
+    const data = await post_request({ target: "/scan/activity/list", body: body, navigation: navigation });
+    return data;
+}
+const RequestActivityOrders = async ({ body, navigation }) => {
+    const data = await post_request({ target: "/scan/activity/orders", body: body, navigation: navigation });
+    return data;
+}
+const RequestDealList = async ({ body, navigation }) => {
+    const data = await post_request({ target: "/scan/deal/list", body: body, navigation: navigation });
+    return data;
+}
+const RequestScanReedem = async ({ body, navigation }) => {
+    const data = await post_request({ target: "/scan/redeem", body: body, navigation: navigation });
+    return data;
+}
+
+export { RequestLogin, RequestActivityList, RequestActivityOrders, RequestScanReedem, RequestDealList }

@@ -7,6 +7,9 @@ const Colors = StyleSheet.create({
     white: {
         color: '#ffffff'
     },
+    offWhite:{
+        color:'#ffffffB3'
+    },
     black: {
         color: '#000000'
     },

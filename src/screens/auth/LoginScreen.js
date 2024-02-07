@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux'
 import { setIsLogin, setTokenData, setUserData } from '../../utilities/redux/reducers'
 import { mediumFont } from '../../utilities/styles/Themes'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { store } from '../../utilities/redux/store'
 
 const LoginScreen = ({ navigation }) => {
     const dispatch = useDispatch()
@@ -90,10 +91,10 @@ const LoginScreen = ({ navigation }) => {
             <Loader animating={loading} />
             <StatusBar backgroundColor={Colors.black.color} barStyle="light-content" />
             <ImageBackground style={{ height: '100%', width: '100%' }} source={Images.appBackgroundImage}>
-                <KeyboardAwareScrollView
-                    style={{ flex: 1, paddingHorizontal: 25 }}
-                    contentContainerStyle={{ flex: 1, justifyContent: 'center', }}
-                    enableOnAndroid={true} extraScrollHeight={50}>
+                <View
+                    style={{ flex: 1, paddingHorizontal: 25, justifyContent: 'center', }}
+                    // contentContainerStyle={{ flex: 1, justifyContent: 'center', borderWidth: 1, borderColor: 'red' }}
+                    enableOnAndroid={true} >
                     <View style={{ width: '100%', alignItems: 'center' }}>
                         <Image
                             source={Images.appLogo}
@@ -132,7 +133,7 @@ const LoginScreen = ({ navigation }) => {
                     <TouchableOpacity style={{ marginTop: 35 }} onPress={goToNext} >
                         <NormalBtn title={'Login'} />
                     </TouchableOpacity>
-                </KeyboardAwareScrollView>
+                </View>
             </ImageBackground>
         </View>
     )

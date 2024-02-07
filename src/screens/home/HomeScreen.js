@@ -7,7 +7,7 @@ import TopBarNavigation from '../../routes/TopBarNavigation'
 import { LogoutIcon } from '../../utilities/styles/Icons'
 import Loader from '../../components/common/Loader'
 import { useDispatch } from 'react-redux'
-import { setIsLogin, setUserData } from '../../utilities/redux/reducers'
+import { setIsLogin, setTokenData, setUserData } from '../../utilities/redux/reducers'
 
 const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
@@ -36,6 +36,7 @@ const HomeScreen = ({ navigation }) => {
     async function requestLogOut() {
         setLoading(true)
         dispatch(setUserData(''))
+        dispatch(setTokenData(''))
         dispatch(setIsLogin(false))
         navigation.navigate('SplashScreen')
         setLoading(false)
@@ -43,9 +44,9 @@ const HomeScreen = ({ navigation }) => {
 
     const scannerNavigation = () => {
         if(Platform.OS === 'ios') {
-            navigation.navigate('QrScannerScreen');
+            navigation.navigate('IosScanner');
         }else {
-            navigation.navigate('ScannerScreen');
+            navigation.navigate('AndroidScanner');
         }
     }
 
@@ -99,6 +100,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.black.color,
         backgroundColor: Colors.grey.color,
         overflow: 'hidden',
+        elevation: 5,
     },
 });
 

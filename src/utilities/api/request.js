@@ -9,6 +9,7 @@ const post_request = async ({ target, body, navigation }) => {
         baseURL: baseURL,
         headers: {
             'Content-Type': 'application/json',
+            Authorization: "Bearer " + token,
         }
     });
     try {

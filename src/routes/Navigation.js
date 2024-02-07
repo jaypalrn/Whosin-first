@@ -8,6 +8,7 @@ import ScannerScreen from '../screens/common/ScannerScreen';
 import SplashScreen from '../screens/common/SplashScreen';
 import { navigationRef } from './RootNavigation';
 import QrScannerScreen from '../screens/common/QrScannerScreen';
+import ActivityDetailScreen from '../screens/common/ActivityDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,11 +19,11 @@ const Navigation = () => {
                 <Stack.Screen options={{ headerShown: false }} name="SplashScreen" component={SplashScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen options={{ headerShown: false }} name="HomeScreen" component={HomeScreen} />
-                <Stack.Screen options={{ headerShown: false }} name="ScannerScreen" component={ScannerScreen} />
-                <Stack.Screen options={{ headerShown: false }} name="QrScannerScreen" component={QrScannerScreen} />
-
+                <Stack.Screen options={{ headerShown: false }} name="AndroidScanner" component={ScannerScreen} />
+                <Stack.Screen options={{ headerShown: false }} name="IosScanner" component={QrScannerScreen} />
 
                 <Stack.Screen options={{ headerShown: false }} name="TopBarNavigation" component={TopBarNavigation} />
+                <Stack.Screen options={{ headerShown: false }} name="ActivityDetailScreen" component={ActivityDetailScreen} />
 
             </Stack.Navigator>
         </NavigationContainer>

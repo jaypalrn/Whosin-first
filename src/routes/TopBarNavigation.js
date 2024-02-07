@@ -16,12 +16,11 @@ const TopBarNavigation = () => {
                 tabBarInactiveTintColor: Colors.grey.color,
                 tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
                 tabBarStyle: { backgroundColor: 'transparent' },
-                // tabBarItemStyle: { width: 100, borderWidth:1, borderColor:'green', },
                 tabBarIndicatorStyle: { backgroundColor: Colors.white.color, height: 2 },
             }}
         >
-            <Tab.Screen options={{ tabBarLabel: 'Deals', }} name="FirstTopScreen" component={FirstTopScreen} />
-            <Tab.Screen options={{ tabBarLabel: 'Events' }} name="SecondTopScreen" component={SecondTopScreen} />
+            <Tab.Screen options={{ tabBarLabel: 'Deals', }} name="DealsScreen" component={FirstTopScreen} />
+            <Tab.Screen options={{ tabBarLabel: 'Activity' }} name="ActivityScreen" component={SecondTopScreen} />
         </Tab.Navigator>
     )
 }
