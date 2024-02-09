@@ -17,9 +17,13 @@ const RequestDealList = async ({ body, navigation }) => {
     const data = await post_request({ target: "/scan/deal/list", body: body, navigation: navigation });
     return data;
 }
+const RequestDealsOrders = async ({ body, navigation }) => {
+    const data = await post_request({ target: "/scan/deal/orders", body: body, navigation: navigation });
+    return data;
+}
 const RequestScanReedem = async ({ body, navigation }) => {
     const data = await post_request({ target: "/scan/redeem", body: body, navigation: navigation });
     return data;
 }
 
-export { RequestLogin, RequestActivityList, RequestActivityOrders, RequestScanReedem, RequestDealList }
+export { RequestLogin, RequestActivityList, RequestActivityOrders, RequestScanReedem, RequestDealList, RequestDealsOrders }

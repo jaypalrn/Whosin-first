@@ -9,6 +9,7 @@ import SplashScreen from '../screens/common/SplashScreen';
 import { navigationRef } from './RootNavigation';
 import QrScannerScreen from '../screens/common/QrScannerScreen';
 import ActivityDetailScreen from '../screens/common/ActivityDetailScreen';
+import DealDetailScreen from '../screens/common/DealDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ const Navigation = () => {
 
                 <Stack.Screen options={{ headerShown: false }} name="TopBarNavigation" component={TopBarNavigation} />
                 <Stack.Screen options={{ headerShown: false }} name="ActivityDetailScreen" component={ActivityDetailScreen} />
+                <Stack.Screen options={{ headerShown: false }} name="DealDetailScreen" component={DealDetailScreen} />
 
             </Stack.Navigator>
         </NavigationContainer>

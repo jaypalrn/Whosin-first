@@ -14,7 +14,7 @@ import RegularText from '../../components/common/RegularText'
 
 const SecondTopScreen = ({ navigation }) => {
   const token = store.getState().userSession.tokenData
-  // console.log("token is", token);
+  // console.log("whosin token is", token);
 
   const [loading, setLoading] = useState(false);
   const [activityData, setActivityData] = useState([]);
@@ -145,7 +145,6 @@ const SecondTopScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    widht: windowWidth,
     borderColor: 'red',
     marginTop: 15,
     borderRadius: 10,

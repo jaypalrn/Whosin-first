@@ -31,20 +31,19 @@ const ScannerScreen = ({ navigation }) => {
             // Remove the "data:" prefix from the string
             const jsonData = data.replace('data:', '');
             console.log('Raw barcode data:', jsonData);
-            
+
             // Parse the JSON string into an object
             const barcodeData = JSON.parse(jsonData);
             console.log('Barcode Scanned data:', barcodeData);
-            
+
             const id = barcodeData.id;
             console.log('Scanning QR data:', { id });
             requestScanReedem(barcodeData);
         } catch (error) {
             console.error('Error parsing barcode data:', error);
-            // Provide a fallback mechanism here, such as logging an error message or handling it accordingly
         }
     };
-    
+
     const toggleFlash = () => {
         setFlashOn(prevState => !prevState);
     };
@@ -72,6 +71,19 @@ const ScannerScreen = ({ navigation }) => {
                 const { values } = response;
                 navigation.goBack();
                 Alert.alert('Scanned QR codes from image:', values.join('\n'));
+                values.forEach(barcodeData => {
+                    try {
+                        const jsonData = barcodeData.replace('data:', '');
+                        console.log('Raw barcode data:', jsonData);
+
+                        const parsedData = JSON.parse(jsonData);
+                        console.log('Parsed barcode data:', parsedData);
+
+                        requestScanReedem(parsedData);
+                    } catch (error) {
+                        console.error('Error parsing barcode data:', error);
+                    }
+                });
             })
             .catch(error => {
                 Alert.alert('Cannot detect QR code in image', error);

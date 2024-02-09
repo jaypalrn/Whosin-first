@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Image, TouchableOpacity, StatusBar, Alert, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, Image, TouchableOpacity, StatusBar, Alert, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import { Images } from '../../utilities/styles/Images'
 import { windowHeight, windowWidth } from '../../utilities/styles/Index'
@@ -77,9 +77,8 @@ const LoginScreen = ({ navigation }) => {
         setLoading(false)
         if (response?.data?.status === 1) {
             dispatch(setIsLogin(true));
-            dispatch(setTokenData(response?.data?.data?.token));
+            dispatch(setTokenData('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWI5MDdmMzJlM2U1MWJhYjAxNTcyMjYiLCJpYXQiOjE3MDcyOTA5ODR9.Bc2vSW7TH0AETp16w91N-g25py39fpDTyI2wyLnxB0E'));
             dispatch(setUserData(response?.data?.data));
-            Alert.alert("login successful", response?.data?.message);
             navigation.replace("HomeScreen");
         } else {
             Alert.alert(response?.data?.message)
@@ -91,49 +90,49 @@ const LoginScreen = ({ navigation }) => {
             <Loader animating={loading} />
             <StatusBar backgroundColor={Colors.black.color} barStyle="light-content" />
             <ImageBackground style={{ height: '100%', width: '100%' }} source={Images.appBackgroundImage}>
-                <View
-                    style={{ flex: 1, paddingHorizontal: 25, justifyContent: 'center', }}
-                    // contentContainerStyle={{ flex: 1, justifyContent: 'center', borderWidth: 1, borderColor: 'red' }}
-                    enableOnAndroid={true} >
-                    <View style={{ width: '100%', alignItems: 'center' }}>
-                        <Image
-                            source={Images.appLogo}
-                            style={{ height: windowHeight / 10, width: windowWidth }}
-                            resizeMode='contain'
+                <KeyboardAwareScrollView
+                    style={{ flex: 1, paddingHorizontal: 25, }}
+                    contentContainerStyle={{ flex: 1, justifyContent: 'center'}}
+                >
+                        <View style={{ width: '100%', alignItems: 'center' }}>
+                            <Image
+                                source={Images.appLogo}s
+                                style={{ height: windowHeight / 10, width: windowWidth }}
+                                resizeMode='contain'
+                            />
+
+                            <BoldText mainStyle={{ marginTop: 30 }} txt={'Welcome to WhoisIN'} />
+                            <RegularText mainStyle={{ marginTop: 10 }} txt={'Sign up or Login to enjoy our best features'} />
+                        </View>
+
+                        <View style={{ marginTop: 40 }}>
+                            <CustomSegmentedControl
+                                values={['Provider', 'Organizer']}
+                                selectedIndex={loginType}
+                                onTabPress={(index) => setLoginType(index)}
+                            />
+                        </View>
+
+
+                        <TextInputComponent
+                            style={{ marginTop: 20 }}
+                            hintText={'Enter email or Mobile Number'}
+                            onTextChange={(text) => setEmail(text)}
+                            value={email}
                         />
 
-                        <BoldText mainStyle={{ marginTop: 30 }} txt={'Welcome to WhoisIN'} />
-                        <RegularText mainStyle={{ marginTop: 10 }} txt={'Sign up or Login to enjoy our best features'} />
-                    </View>
-
-                    <View style={{ marginTop: 40 }}>
-                        <CustomSegmentedControl
-                            values={['Provider', 'Organizer']}
-                            selectedIndex={loginType}
-                            onTabPress={(index) => setLoginType(index)}
+                        <TextInputComponent
+                            style={{ marginTop: 20 }}
+                            hintText={'Enter Password'}
+                            onTextChange={(text) => setPassword(text)}
+                            value={password}
+                            isPassword={true}
                         />
-                    </View>
 
-
-                    <TextInputComponent
-                        style={{ marginTop: 20 }}
-                        hintText={'Enter email or Mobile Number'}
-                        onTextChange={(text) => setEmail(text)}
-                        value={email}
-                    />
-
-                    <TextInputComponent
-                        style={{ marginTop: 20 }}
-                        hintText={'Enter Password'}
-                        onTextChange={(text) => setPassword(text)}
-                        value={password}
-                        isPassword={true}
-                    />
-
-                    <TouchableOpacity style={{ marginTop: 35 }} onPress={goToNext} >
-                        <NormalBtn title={'Login'} />
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity style={{ marginTop: 35 }} onPress={goToNext} >
+                            <NormalBtn title={'Login'} />
+                        </TouchableOpacity>
+                </KeyboardAwareScrollView>
             </ImageBackground>
         </View>
     )

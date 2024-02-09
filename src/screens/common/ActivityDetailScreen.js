@@ -82,7 +82,9 @@ const ActivityDetailScreen = (props) => {
                                             />
                                             <View style={{ marginLeft: 8 }}>
                                                 <Text style={[boldFont({ size: 16, color: Colors.white.color }), {}]} numberOfLines={2} >{item?.user?.first_name + ' ' + item?.user?.last_name}</Text>
-                                                <Text style={[regularFont({ size: 13, color: Colors.white.color }), {}]} numberOfLines={3} >{item?.user?.email}</Text>
+                                                {item?.user?.email &&
+                                                    <Text style={[regularFont({ size: 13, color: Colors.white.color }), {}]} numberOfLines={3} >{item?.user?.email}</Text>
+                                                }
                                             </View>
                                         </View>
                                         <View style={{ borderRadius: 10, flexDirection: 'row', }}>
@@ -109,7 +111,7 @@ const ActivityDetailScreen = (props) => {
                                             </View>
                                         </View>
                                         {isExpired(item.date, item.time) && (
-                                            <Text style={[boldFont({ size: 14, color: Colors.appColor.color }), { marginTop: 10, textAlign: 'center' }]}>Expired !!!</Text>
+                                            <Text style={[boldFont({ size: 14, color: Colors.appColor.color }), { marginTop: 10, textAlign: 'center' }]}>Expired !</Text>
                                         )}
                                     </View>
                                 )
